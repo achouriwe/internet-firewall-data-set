@@ -1,0 +1,36 @@
+Python 3.12.3 (tags/v3.12.3:f6650f9, Apr  9 2024, 14:05:25) [MSC v.1938 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license()" for more information.
+import requests
+import csv
+
+def telecharger_donnees(url):
+    # Télécharger les données depuis l'URL
+    reponse = requests.get(url)
+    # Vérifier si la requête a réussi
+    if reponse.status_code == 200:
+        return reponse.text
+    else:
+        print("Échec du téléchargement des données :", reponse.status_code)
+        return None
+
+def ecrire_donnees_csv(donnees, nom_fichier):
+    # Écrire les données dans un fichier CSV
+    with open(nom_fichier, 'w', newline='') as fichier_csv:
+        writer = csv.writer(fichier_csv)
+        for ligne in donnees:
+            writer.writerow(ligne)
+
+def main():
+    url = "../input/internet-firewall-data-set/log2.csv"
+    donnees = telecharger_donnees(url)
+    if donnees:
+        # Convertir les données en une liste de lignes (tableau 2D)
+        lignes = [ligne.split(',') for ligne in donnees.split('\n')]
+        nom_fichier_csv = "donnees.csv"
+        ecrire_donnees_csv(lignes,log2.csv )
+        print("Les données ont été écrites dans", log.csv)
+    else:
+        print("Impossible de télécharger les données.")
+
+if __name__ == "__main__":
+    main()
